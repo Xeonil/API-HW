@@ -2,6 +2,7 @@ from enum import Enum
 from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import datetime
+from typing import List
 
 app = FastAPI()
 
@@ -58,6 +59,6 @@ def post():
 
 # Get Dogs
 
-@app.get('/dog')
+@app.get('/dog', response_model=List[Dog], summary='Get Dogs')
 def get_dogs():
-    return dogs_db.values
+    return dogs_db.values()
