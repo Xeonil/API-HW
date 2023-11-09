@@ -37,11 +37,20 @@ post_db = [
     Timestamp(id=1, timestamp=10)
 ]
 
+# Return status ОК if ОК
 
 @app.get('/')
 def root():
-    # ваш код здесь
-    ...
+    return 'staus_code=HTTP_200_OK' 
+    
 
-# ваш код здесь
-...
+@app.post('/post')
+def post(x: int, y: int) -> Timestamp:
+
+    '''
+    x = id
+    y = timestamp
+    will return added Timestamp
+    '''
+    post_db.append(Timestamp(id=x, timestamp=y))
+    return post_db[-1]
