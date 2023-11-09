@@ -1,6 +1,7 @@
 from enum import Enum
 from fastapi import FastAPI
 from pydantic import BaseModel
+from datetime import datetime
 
 app = FastAPI()
 
@@ -37,20 +38,26 @@ post_db = [
     Timestamp(id=1, timestamp=10)
 ]
 
+# Root
 # Return status ОК if ОК
 
 @app.get('/')
 def root():
     return 'staus_code=HTTP_200_OK' 
     
+# Get Post
 
 @app.post('/post')
-def post(x: int, y: int) -> Timestamp:
+def post():
 
-    '''
-    x = id
-    y = timestamp
-    will return added Timestamp
-    '''
-    post_db.append(Timestamp(id=x, timestamp=y))
+    new_id = post_db[-1].id + 1
+    new_timestamp = int(datetime.now().timestamp())
+
+    post_db.append(Timestamp(id=new_id, timestamp=new_timestamp))
     return post_db[-1]
+
+# Get Dogs
+
+@app.get('/dog')
+def get_dogs():
+    return dogs_db.values
