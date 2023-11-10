@@ -48,8 +48,8 @@ def root():
     
 # Get Post
 
-@app.post('/post')
-def post():
+@app.post('/post', summary= 'Get Post')
+def post() -> Timestamp:
 
     new_id = post_db[-1].id + 1
     new_timestamp = int(datetime.now().timestamp())
@@ -60,7 +60,7 @@ def post():
 # Get Dogs
 
 @app.get('/dog', summary='Get Dogs')
-def get_dogs():
+def get_dogs() -> list:
     return list(dogs_db.values())
 
 
