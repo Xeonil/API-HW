@@ -67,7 +67,7 @@ def get_dogs() -> List[Dog]:
 
 # Create Dog
 
-@app.post('/dog', summary='Create Dogs')
+@app.post('/dog', summary='Create Dog')
 def create_dog(name: str, kind: DogType) -> Dog:
         
     pk = max([dog.pk for dog in dogs_db.values()], default=-1) + 1
