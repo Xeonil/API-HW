@@ -2,6 +2,7 @@ from enum import Enum
 from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import datetime
+from typing import List
 
 
 app = FastAPI()
@@ -60,7 +61,7 @@ def post() -> Timestamp:
 # Get Dogs
 
 @app.get('/dog', summary='Get Dogs')
-def get_dogs() -> list:
+def get_dogs() -> List[Dog]:
     return list(dogs_db.values())
 
 
@@ -81,7 +82,7 @@ def create_dog(name: str, kind: DogType):
 # Get Dog By Pk
 
 @app.get('/dog/{pk}', summary='Get Dog By Pk')
-def get_dog_by_pk(pk: int):
+def get_dog_by_pk(pk: int) -> Dog:
     for dog in dogs_db.values():
         if dog.pk == pk:
             return dog
@@ -96,7 +97,7 @@ def get_dogs_by_kind(kind: DogType):
 # Update Dog 
 
 @app.patch("/dog/{pk}", summary='Update Dog')
-def update_dog(pk: int, name: str, kind: DogType):
+def update_dog(pk: int, name: str, kind: DogType) -> Dog:
     dog = dogs_db[pk]
     dog.name = name
     dog.kind = kind
