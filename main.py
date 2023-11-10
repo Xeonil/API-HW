@@ -61,7 +61,7 @@ def post():
 
 @app.get('/dog', summary='Get Dogs')
 def get_dogs():
-    return dogs_db.values()
+    return list(dogs_db.values())
 
 
 # Create Dog
@@ -76,3 +76,28 @@ def create_dog(name: str, kind: DogType):
     dogs_db[key] = new_dog
 
     return dict(new_dog)
+
+
+# Get Dog By Pk
+
+@app.get('/dog/{pk}', summary='Get Dog By Pk')
+def get_dog_by_pk(pk: int):
+    for dog in dogs_db.values():
+        if dog.pk == pk:
+            return dog
+        
+# Get Dog By Kind
+
+@app.get('/dog/kind/{kind}', summary='Get Dogs By Kind')
+def get_dogs_by_kind(kind: DogType):
+    dogs_by_kind = [dog for dog in dogs_db.values() if dog.kind == kind]
+    return dogs_by_kind
+
+# Update Dog 
+
+@app.patch("/dog/{pk}", summary='Update Dog')
+def update_dog(pk: int, name: str, kind: DogType):
+    dog = dogs_db[pk]
+    dog.name = name
+    dog.kind = kind
+    return dog
