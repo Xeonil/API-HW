@@ -68,7 +68,7 @@ def get_dogs() -> List[Dog]:
 # Create Dog
 
 @app.post('/dog', summary='Create Dogs')
-def create_dog(name: str, kind: DogType):
+def create_dog(name: str, kind: DogType) -> Dog:
         
     pk = max([dog.pk for dog in dogs_db.values()], default=-1) + 1
     key = max(dogs_db.keys(), default=-1) + 1
@@ -76,7 +76,7 @@ def create_dog(name: str, kind: DogType):
     new_dog = Dog(name=name, pk=pk, kind=kind)
     dogs_db[key] = new_dog
 
-    return dict(new_dog)
+    return new_dog
 
 
 # Get Dog By Pk
@@ -90,7 +90,7 @@ def get_dog_by_pk(pk: int) -> Dog:
 # Get Dog By Kind
 
 @app.get('/dog/kind/{kind}', summary='Get Dogs By Kind')
-def get_dogs_by_kind(kind: DogType):
+def get_dogs_by_kind(kind: DogType) -> List[Dog]:
     dogs_by_kind = [dog for dog in dogs_db.values() if dog.kind == kind]
     return dogs_by_kind
 
